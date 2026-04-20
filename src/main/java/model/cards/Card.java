@@ -34,30 +34,20 @@ public class Card implements ICard, Comparable<Card>{
 	
 	@Override
 	public final Suit getSuit() {
-		/*
-		 * TODO Atelier1
-		 */
-		return null;
+		return suit;
 	}
 	
 	@Override
 	public final boolean isRevealed() {
-		/*
-		 * TODO Atelier1
-		 */
-		return false;
+		return isFaceUp;
 	}
 	
 	public final void reveale() {
-		/*
-		 * TODO Atelier1
-		 */
+		this.isFaceUp = true;
 	}
 	
 	public final void hide() {
-		/*
-		 * TODO Atelier1
-		 */
+		this.isFaceUp = false;
 	}
 	
 	@Override
@@ -99,13 +89,7 @@ public class Card implements ICard, Comparable<Card>{
 	 */
 	@Override
 	public int compareTo(Card pc) {
-		int ret = 0;
-		
-		/*
-		 * TODO Atelier1
-		 */
-	
-		return ret;
+		return this.rank.getRank() - pc.rank.getRank();
 	}
 
 }

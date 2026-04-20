@@ -51,58 +51,46 @@ public class Hand implements ICardsCollection {
 
 	@Override
 	public final void addCard(Card pc) {
-		/*
-		 * TODO Atelier1
-		 */
+		cards.add(pc);
 	}
 
 	@Override
 	public final Card removeTopCard() {
 		Card card = null;
-		/*
-		 * TODO Atelier1
-		 */
+		if (!cards.isEmpty()) {
+			card = cards.remove(0);
+		}
 		return card;
 	}
 
 	@Override
 	public final Card removeCard(int index) {
 		Card card = null;
-		/*
-		 * TODO Atelier1
-		 */
+		if (index >= 0 && index < cards.size()) {
+			card = cards.remove(index);
+		}
 		return card;
 	}
 
 	@Override
 	public final boolean isEmpty() {
-		boolean ret = false;
-		/*
-		 * TODO Atelier1
-		 */
-		return ret;
+		return cards.isEmpty();
 	}
 
 	@Override
 	public final void clear() {
-		/*
-		 * TODO Atelier1
-		 */
+		cards.clear();
 	}
 
 	@Override
 	public final int size() {
-		int ret = 0;
-		/*
-		 * TODO Atelier1
-		 */
-		return ret;
+		return cards.size();
 	}
 
-//	@Override
-//	public String toString() {
-//		return "[" + cards + "]";
-//	}
+	@Override
+	public String toString() {
+		return "[" + cards + "]";
+	}
 
 	/**
 	 * @param index
@@ -112,9 +100,10 @@ public class Hand implements ICardsCollection {
 	public final Card playCard(int index) {
 
 		Card card = null;
-		/*
-		 * TODO Atelier1
-		 */
+		if (index >= 0 && index < cards.size()) {
+			card = cards.remove(index);
+			card.reveale();
+		}
 		return card;
 	}
 
@@ -125,9 +114,10 @@ public class Hand implements ICardsCollection {
 	public final boolean revealeCard(int index) {
 
 		Card card = null;
-		/*
-		 * TODO Atelier1
-		 */
+		if (index >= 0 && index < cards.size()) {
+			card = cards.get(index);
+			card.reveale();
+		}
 		return card != null ? true : false;
 	}
 
@@ -138,9 +128,10 @@ public class Hand implements ICardsCollection {
 	public final boolean hideCard(int index) {
 
 		Card card = null;
-		/*
-		 * TODO Atelier1
-		 */
+		if (index >= 0 && index < cards.size()) {
+			card = cards.get(index);
+			card.hide();
+		}
 		return card != null ? true : false;
 	}
 

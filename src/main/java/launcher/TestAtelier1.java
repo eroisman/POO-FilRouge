@@ -146,6 +146,7 @@ public class TestAtelier1 {
 		System.out.println("Après revealeCard(1) : " + hand);	// Après revealeCard(1) : [[?-?, Roi-Carreau]] 
 		hand.revealeCard(6);
 		System.out.println("Après revealeCard(6) : " + hand);	// Après revealeCard(6) : [[?-?, Roi-Carreau]] 
+		hand.revealeCard(0);
 		System.out.println("Après revealeCard(0) : " + hand);	// Après revealeCard(0) : [[2-Carreau, Roi-Carreau]] 
 
 		
@@ -204,6 +205,8 @@ public class TestAtelier1 {
 		System.out.println("p1.isStillActive() : " + p1.isStillActive());	// p1.isStillActive() : true
 		System.out.println("p1.hasWonAllCards(3) : " + p1.hasWonAllCards(3));	// p1.hasWonAllCards(3) : true
 		System.out.println("p1.hasWonAllCards(6) : " + p1.hasWonAllCards(6));	// p1.hasWonAllCards(6) : false
+		p1.addCardToHand(p1.removeCardFromTrickPile(0));
+		p1.addCardToHand(p1.removeCardFromTrickPile(0));
 
 		
 		/* Test hideCard(), revealeCard(), playCard() */
@@ -216,9 +219,10 @@ public class TestAtelier1 {
 		System.out.println("Après playCard(0) : " + p1);	// Après playCard(0) : [Joueur1 ** Hand[[Roi-Carreau, 2-Pique]] ** trickPile[[]]]
 		
 		/* Test removeCardFromHand(), removeCardFromTrickPile() */
-		p1.addCardToTrickPile(p1.removeCardFromHand(0));
+		p1.addCardToTrickPile(p1.removeCardFromHand(1));
 		System.out.println("Après removeCardFromHand(0) : " + p1);	// Après removeCardFromHand(0) : [Joueur1 ** Hand[[Roi-Carreau]] ** trickPile[[2-Pique]]]
-		p1.removeCardFromTrickPile(0);
+		p1.removeCardFromHand(0);
+		p1.addCardToHand(p1.removeCardFromTrickPile(0));
 		System.out.println("Après removeCardFromTrickPile(0) : " + p1);	// Après removeCardFromTrickPile(0) : [Joueur1 ** Hand[[2-Pique]] ** trickPile[[]]]
 		
 		
