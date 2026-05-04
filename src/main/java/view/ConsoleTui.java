@@ -13,8 +13,12 @@ import java.util.List;
  */
 public final class ConsoleTui implements IConsoleTui {
 
-    private static final int BOX_WIDTH = 136;
-    private static final int[] CHECK_WIDTHS = {8, 44, 44, 24};
+    private static final int DEFAULT_BOX_WIDTH = 112;
+    private static final int MIN_BOX_WIDTH = 80;
+    private static final int MAX_BOX_WIDTH = 220;
+
+    private static final int BOX_WIDTH = resolveBoxWidth();
+    private static final int[] CHECK_WIDTHS = resolveCheckWidths(BOX_WIDTH);
 
     @Override
     public void title(String title, String subtitle) {
@@ -154,5 +158,59 @@ public final class ConsoleTui implements IConsoleTui {
         }
 
         return lines;
+    }
+
+    private static int resolveBoxWidth() {
+        String raw = System.getProperty("tui.width");
+        if (raw == null || raw.trim().isEmpty()) {
+            return DEFAULT_BOX_WIDTH;
+        }
+
+        try {
+            int parsed = Integer.parseInt(raw.trim());
+            if (parsed < MIN_BOX_WIDTH) {
+                return MIN_BOX_WIDTH;
+            }
+            if (parsed > MAX_BOX_WIDTH) {
+                return MAX_BOX_WIDTH;
+            }
+            return parsed;
+        } catch (NumberFormatException ignored) {
+            return DEFAULT_BOX_WIDTH;
+        }
+    }
+
+    private static int[] resolveCheckWidths(int boxWidth) {
+        // Table width is the sum of content widths + 13 characters for separators/padding.
+        int targetContentWidth = Math.max(0, boxWidth - 13);
+
+        int[] min = {6, 22, 22, 14};
+        int minSum = min[0] + min[1] + min[2] + min[3];
+        if (targetContentWidth <= minSum) {
+            return min;
+        }
+
+        int extra = targetContentWidth - minSum;
+        int[] weights = {8, 44, 44, 24};
+        int weightTotal = 120;
+
+        int[] widths = {
+                min[0] + (extra * weights[0] / weightTotal),
+                min[1] + (extra * weights[1] / weightTotal),
+                min[2] + (extra * weights[2] / weightTotal),
+                min[3] + (extra * weights[3] / weightTotal)
+        };
+
+        int used = widths[0] + widths[1] + widths[2] + widths[3];
+        int remainder = targetContentWidth - used;
+        int[] distributionOrder = {1, 2, 3, 0};
+        int index = 0;
+        while (remainder > 0) {
+            widths[distributionOrder[index % distributionOrder.length]]++;
+            remainder--;
+            index++;
+        }
+
+        return widths;
     }
 }

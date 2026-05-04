@@ -23,8 +23,8 @@ public class Card implements ICard, Comparable<Card>{
 		super();
 		this.rank = rank;
 		this.suit = suit;
-		this.isFaceUp = false;
-//		this.isFaceUp = true;
+//		this.isFaceUp = false;
+		this.isFaceUp = true;
 	}
 	
 	@Override

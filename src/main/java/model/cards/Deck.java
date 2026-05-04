@@ -1,10 +1,6 @@
 package model.cards;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
 
 import allShared.ICardsCollection;
 
@@ -36,109 +32,48 @@ public class Deck extends AbstractCardsCollection {
 	 * 	As-Carreau, As-Coeur, As-Pique, As-Trefle]]
 	 */
 	
-	/*
-	 *************** TODO ToChange Atelier2 ***************
-	 */
-	
-	private final List<Card> cards; 
-
 	public Deck() {
 		super();
-		cards = new ArrayList<Card>();
 	}
 	
 	public Deck(int deckSize) {
 		super();
-		cards = new ArrayList<Card>();
-		
-		/*
-		 * TODO Atelier2
-		 */
+		int firstRankIndex = 0;
+		if (deckSize == 32) {
+			firstRankIndex = Rank.values().length - 8;
+		}
+
+		for (int i = firstRankIndex; i < Rank.values().length; i++) {
+			for (Suit suit : Suit.values()) {
+				this.cards.add(new Card(Rank.values()[i], suit));
+			}
+		}
 
 	}
 
 	public Deck(Collection<Card> collection) {
-		super();
-		cards = new ArrayList<Card>(collection);
+		super(collection);
 	}
 
 	
 	public Deck(ICardsCollection iCardsCollection) {
-		super();
-		cards = null;
-	}
-	
-	@Override
-	public void shuffle() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Card removeTopCard() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Card removeCard(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addCard(Card pc) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		super(iCardsCollection);
 	}
 
 	@Override
 	public Card max() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		if (cards.isEmpty()) {
+			return null;
+		}
 
-	@Override
-	public Card max(Comparator<Card> comparator) {
-		// TODO Auto-generated method stub
-		return null;
+		Card maxCard = cards.get(0);
+		for (Card card : cards) {
+			int rankDiff = card.getRank().getRank() - maxCard.getRank().getRank();
+			if (rankDiff > 0 || (rankDiff == 0 && card.getSuit().value() < maxCard.getSuit().value())) {
+				maxCard = card;
+			}
+		}
+		return maxCard;
 	}
-
-	@Override
-	public void sort() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sort(Comparator<Card> comparator) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Iterator<Card> iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 }

@@ -1,5 +1,7 @@
 package model.player;
 
+import java.util.Objects;
+
 import allShared.IPlayer;
 
 /**
@@ -13,7 +15,7 @@ import allShared.IPlayer;
  * @author francoise.perrin
  *
  */
-public class PlayerRender implements IPlayer, Comparable<IPlayer> {
+public class PlayerRender implements IPlayer {
 
 	private final IPlayer player;
 	
@@ -23,75 +25,50 @@ public class PlayerRender implements IPlayer, Comparable<IPlayer> {
 	
 	@Override
 	public final String getName() {
-		String ret = null;
-		/*
-		 * TODO Atelier2
-		 */
-		return ret;
+		return player.getName();
 	}
 	
 	@Override
 	public final boolean isStillActive() {
-		boolean ret = false;
-		/*
-		 * TODO Atelier2
-		 */
-		return ret;
+		return player.isStillActive();
 	}
 
 	@Override
 	public final boolean isTrickWinner() {
-		boolean ret = false;
-		/*
-		 * TODO Atelier2
-		 */
-		return ret;
+		return player.isTrickWinner();
 	}
 	
 
 	@Override
 	public boolean isGameWinner() {
-		boolean ret = false;
-		/*
-		 * TODO Atelier2
-		 */
-		return ret;
+		return player.isGameWinner();
 	}
 
 	@Override
 	public String toString() {
-		String ret = null;
-		/*
-		 * TODO Atelier2
-		 */
-		return ret;
+		return player.getName();
 	}
 
 	@Override
 	public int hashCode() {	
-		int ret = -99999;
-		/*
-		 * TODO Atelier2
-		 */
-		return ret;
+		return Objects.hash(player);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		boolean ret = false;
-		/*
-		 * TODO Atelier2
-		 */
-		return ret;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PlayerRender other = (PlayerRender) obj;
+		return Objects.equals(player, other.player);
 	}
 
 	@Override
 	public int compareTo(IPlayer o) {
-		int ret = -99999;
-		/*
-		 * TODO Atelier2
-		 */
-		return ret;
+		return this.player.compareTo(o);
 	}
 
 

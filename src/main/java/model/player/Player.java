@@ -1,7 +1,5 @@
 package model.player;
 
-import java.util.Iterator;
-
 import allShared.CardsCollectionType;
 import allShared.IPlayer;
 import controller.CardsCollectionFactory;
@@ -129,9 +127,11 @@ public class Player implements IPlayer{
 	 */
 	public void addWonCardsBackToHand() {
 
-		/*
-		 * TODO Atelier2
-		 */
+		for (Card card : trickPile) {
+			hand.addCard(card);
+		}
+		trickPile.clear();
+		hand.sort(new model.cards.NewWarGameCardComparator());
 		  
 	}
 	

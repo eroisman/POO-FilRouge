@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import allShared.ICardsCollection;
 
@@ -24,12 +23,99 @@ import allShared.ICardsCollection;
  * 
  * @author francoise.perrin
  */
-public abstract class AbstractCardsCollection implements ICardsCollection, Iterable<Card> {
-//
-//	/*
-//	 * TODO Atelier2
-//	 */
-//	public AbstractCardsCollection(ICardsCollection iCardsCollection) {
-//		this( ( (AbstractCardsCollection) iCardsCollection).cards);
-//	}
+public abstract class AbstractCardsCollection implements ICardsCollection {
+
+	protected final List<Card> cards;
+
+	public AbstractCardsCollection() {
+		super();
+		this.cards = new ArrayList<Card>();
+	}
+
+	public AbstractCardsCollection(Collection<Card> collection) {
+		super();
+		this.cards = new ArrayList<Card>(collection);
+	}
+
+	public AbstractCardsCollection(ICardsCollection iCardsCollection) {
+		super();
+		this.cards = new ArrayList<Card>();
+		for (Card card : iCardsCollection) {
+			this.cards.add(card);
+		}
+	}
+
+	@Override
+	public void shuffle() {
+		Collections.shuffle(cards);
+	}
+
+	@Override
+	public Card removeTopCard() {
+		return cards.isEmpty() ? null : cards.remove(0);
+	}
+
+	@Override
+	public Card removeCard(int index) {
+		if (index >= 0 && index < cards.size()) {
+			return cards.remove(index);
+		}
+		return null;
+	}
+
+	@Override
+	public void addCard(Card pc) {
+		cards.add(pc);
+	}
+
+	@Override
+	public void clear() {
+		cards.clear();
+	}
+
+	@Override
+	public int size() {
+		return cards.size();
+	}
+
+	@Override
+	public Card max() {
+		if (cards.isEmpty()) {
+			return null;
+		}
+		return Collections.max(cards);
+	}
+
+	@Override
+	public Card max(Comparator<Card> comparator) {
+		if (cards.isEmpty()) {
+			return null;
+		}
+		return Collections.max(cards, comparator);
+	}
+
+	@Override
+	public void sort() {
+		Collections.sort(cards);
+	}
+
+	@Override
+	public void sort(Comparator<Card> comparator) {
+		Collections.sort(cards, comparator);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return cards.isEmpty();
+	}
+
+	@Override
+	public Iterator<Card> iterator() {
+		return cards.iterator();
+	}
+
+	@Override
+	public String toString() {
+		return "[" + cards + "]";
+	}
 }

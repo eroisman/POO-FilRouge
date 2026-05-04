@@ -1,11 +1,9 @@
 package model.cards;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 
 import allShared.ICardsCollection;
 
@@ -19,33 +17,27 @@ import allShared.ICardsCollection;
  * 
  * @author francoise.perrin
  */
-public class Hand implements ICardsCollection {
-
-	private final List<Card> cards; /* ToChange Atelier2 */
+public class Hand extends AbstractCardsCollection {
 
 	/*
 	 * TODO ToChange Atelier2
 	 */
 	public Hand() {
 		super();
-		cards = new ArrayList<Card>();
 	}
 
 	/*
 	 * TODO ToChange Atelier2
 	 */
 	public Hand(Collection<Card> collection) {
-		super();
-		cards = new ArrayList<Card>(collection);
+		super(collection);
 	}
 
 	/*
 	 * TODO ToChange Atelier2
 	 */
 	public Hand(ICardsCollection iCardsCollection) {
-		super();		// TODO - à supprimer Atelier 2
-		cards = null; 	// TODO - à supprimer Atelier 2
-		//super(iCardsCollection); // TODO - à activer Atelier 2
+		super(iCardsCollection);
 
 	}
 
@@ -138,16 +130,12 @@ public class Hand implements ICardsCollection {
 
 	@Override
 	public void sort() {
-		/*
-		 * TODO Atelier2
-		 */
+		super.sort(new NewWarGameCardComparator());
 	}
 
 	@Override
 	public void sort(Comparator<Card> comparator) {
-		/*
-		 * TODO Atelier2
-		 */
+		super.sort(comparator);
 	}
 
 
@@ -160,27 +148,26 @@ public class Hand implements ICardsCollection {
 	 */
 	@Override
 	 public final void shuffle() {
+		 Collections.shuffle(cards);
+
 		 /*
-		  * TODO Atelier2
+		  * Alternative possible sans Collections.shuffle():
+		  * Random random = new Random();
+		  * for (int i = cards.size() - 1; i > 0; i--) {
+		  * 	int j = random.nextInt(i + 1);
+		  * 	Collections.swap(cards, i, j);
+		  * }
 		  */
 	 }
 
 	 @Override
 	 public final Card max() {
-		 Card card = null;
-		 /*
-		  * TODO Atelier2
-		  */
-		 return  card;
+		 return super.max();
 	 }
 
 	 @Override
 	 public final Card max(Comparator<Card> comparator) {
-		 Card card = null;
-		 /*
-		  * TODO Atelier2
-		  */
-		 return  card;
+		 return super.max(comparator);
 	 }
 
 	 /*

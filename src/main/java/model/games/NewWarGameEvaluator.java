@@ -18,19 +18,12 @@ import model.cards.NewWarGameCardComparator;
 public class NewWarGameEvaluator extends AbstractGameEvaluator implements IGameEvaluator {
 
 	protected final Card max(ICardsCollection gamingMat) {
-		Card maxCard = null;
-		/*
-		 * TODO Atelier2
-		 */
-		return maxCard;
+		return gamingMat.max(new NewWarGameCardComparator());
 	}
 
 	protected final int comparaison(Card card, Card maxCard) {
-		int diff = -99999;
-		/*
-		 * TODO Atelier2
-		 */
-		return diff;
+		Comparator<Card> comparator = new NewWarGameCardComparator();
+		return comparator.compare(card, maxCard);
 	}
 	
 

@@ -24,22 +24,22 @@ public abstract class AbstractGameEvaluator implements IGameEvaluator {
 
 		Card maxCard = null;
 		
-		/*
-		 * TODO A décommenter Atelier 2
-		 */
-		
-//		maxCard = this.max(gamingMat);
-//		int frequency = 0;
-//		
-//		for(Card card : gamingMat) {
-//			if (this.comparaison(card, maxCard)==0) {
-//				frequency++ ;	
-//			}
-//		}
-//		
-//		if (frequency!=1) {	
-//			 maxCard = null;
-//		}
+		maxCard = this.max(gamingMat);
+		int frequency = 0;
+
+		if (maxCard == null) {
+			return null;
+		}
+
+		for(Card card : gamingMat) {
+			if (this.comparaison(card, maxCard)==0) {
+				frequency++ ;
+			}
+		}
+
+		if (frequency!=1) {
+			 maxCard = null;
+		}
 		return maxCard;
 	}
 
