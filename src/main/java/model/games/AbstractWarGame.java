@@ -41,9 +41,15 @@ public abstract class AbstractWarGame extends AbstractGame implements IGame {
 	 */
 	protected final void dealCardsFromDeck(int nbCards) {
 	
-		/*
-		 * TODO Atelier3
-		 */
+		for (int cardIndex = 0; cardIndex < nbCards; cardIndex++) {
+			for (Player player : this.players) {
+				Card card = this.deck.removeTopCard();
+				if (card == null) {
+					return;
+				}
+				player.addCardToHand(card);
+			}
+		}
 	}
 
 	
@@ -56,10 +62,21 @@ public abstract class AbstractWarGame extends AbstractGame implements IGame {
 	@Override
 	public final boolean isGameEnd() {
 		boolean isGameEnd = false;
+		boolean hasAnyCardLeft = false;
 		
-		/*
-		 * TODO Atelier3
-		 */
+		for (Player player : this.players) {
+			boolean hasWonAllCards = player.hasWonAllCards(this.initDeckSize);
+			player.setGameWinner(hasWonAllCards);
+			if (hasWonAllCards) {
+				isGameEnd = true;
+			}
+			if (player.isStillActive() || !player.isTrickPileEmpty()) {
+				hasAnyCardLeft = true;
+			}
+		}
+		if (!hasAnyCardLeft) {
+			isGameEnd = true;
+		}
 		return isGameEnd;
 	}
 

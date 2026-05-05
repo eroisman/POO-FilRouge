@@ -131,7 +131,7 @@ public class Player implements IPlayer{
 			hand.addCard(card);
 		}
 		trickPile.clear();
-		hand.sort(new model.cards.NewWarGameCardComparator());
+		hand.shuffle();
 		  
 	}
 	

@@ -64,25 +64,10 @@ public abstract class AbstractGame implements IGame {
 		 * de manière différente selon le type de jeu
 		 */
 		this.deck = deck;
+		this.deck.shuffle();
 		
-		/* 
-		 * [Ces lignes ne sont utiles que pour tester les algos avec 
-		 * 4 cartes : à commenter/supprimer après les tests]
-		 */
-		this.initDeckSize = 4;
-		Player player;
-		player = this.players.get(0);
-		player.addCardToHand(new Card(Rank._AS, Suit.CARREAU));
-		player.addCardToHand(new Card(Rank._10, Suit.CARREAU));
-		player = this.players.get(1);
-		player.addCardToHand(new Card(Rank._AS, Suit.COEUR));
-		player.addCardToHand(new Card(Rank._9, Suit.CARREAU));
-		
-		/* 
-		 * [Ces lignes seront à décommenter après les tests avec 4 cartes]
-		 */
-//		this.initDeckSize = this.deck.size();
-//		this.dealCardsFromDeck(this.initDeckSize / this.players.size());
+		this.initDeckSize = this.deck.size();
+		this.dealCardsFromDeck(this.initDeckSize / this.players.size());
 	
 	}
 	
@@ -115,9 +100,28 @@ public abstract class AbstractGame implements IGame {
 	@Override
 	public final void PlayCards(Map<String, Integer> whichCardArePlayed) {
 
-		/*
-		 * TODO Atelier3
-		 */
+		for (Player player : this.players) {
+			player.setTrickWinner(false);
+			this.gamingMatMap.put(player, null);
+		}
+
+		for (Player player : this.players) {
+			if (player.isHandEmpty() && !player.isTrickPileEmpty()) {
+				player.addWonCardsBackToHand();
+			}
+
+			if (player.isStillActive()) {
+				Integer cardIndex = whichCardArePlayed == null ? null : whichCardArePlayed.get(player.getName());
+				Card playedCard = cardIndex == null ? player.playCard(0) : player.playCard(cardIndex.intValue());
+				if (playedCard == null && cardIndex != null && cardIndex.intValue() != 0) {
+					playedCard = player.playCard(0);
+				}
+				if (playedCard != null) {
+					this.gamingMatMap.put(player, playedCard);
+					this.board.addCard(playedCard);
+				}
+			}
+		}
 		
 	}
 
@@ -136,10 +140,27 @@ public abstract class AbstractGame implements IGame {
 		
 		boolean isTrickWon = false;
 		Player trickWinnerPlayer = null;
-		
-		/*
-		 * TODO Atelier3
-		 */
+		ICardsCollection currentRoundCards = new Board();
+		for (Entry<Player, Card> entry : this.gamingMatMap.entrySet()) {
+			if (entry.getValue() != null) {
+				currentRoundCards.addCard(entry.getValue());
+			}
+		}
+
+		Card trickWinnerCard = this.getGameEvaluator().evaluateTrickWinner(currentRoundCards);
+		for (Player player : this.players) {
+			player.setTrickWinner(false);
+		}
+		if (trickWinnerCard != null) {
+			for (Entry<Player, Card> entry : this.gamingMatMap.entrySet()) {
+				if (entry.getValue() == trickWinnerCard) {
+					trickWinnerPlayer = entry.getKey();
+					trickWinnerPlayer.setTrickWinner(true);
+					isTrickWon = true;
+					break;
+				}
+			}
+		}
 		
 		return isTrickWon;
 	}
@@ -160,9 +181,11 @@ public abstract class AbstractGame implements IGame {
 	public final Map<IPlayer, ICard> getGamingMatRender() {
 		Map<IPlayer, ICard> gamingMatMapRender = new TreeMap<IPlayer, ICard>();
 
-		/*
-		 * TODO Atelier3
-		 */
+		for (Entry<Player, Card> entry : this.gamingMatMap.entrySet()) {
+			IPlayer playerRender = new PlayerRender(entry.getKey());
+			ICard cardRender = entry.getValue() == null ? null : new CardRender(entry.getValue());
+			gamingMatMapRender.put(playerRender, cardRender);
+		}
 		 
 		return gamingMatMapRender;
 	}
@@ -175,9 +198,19 @@ public abstract class AbstractGame implements IGame {
 	@Override
 	public final void theWinnerTakesItAll() {
 
-		/*
-		 * TODO Atelier3
-		 */
+		Player trickWinnerPlayer = null;
+		for (Player player : this.players) {
+			if (player.isTrickWinner()) {
+				trickWinnerPlayer = player;
+				break;
+			}
+		}
+
+		if (trickWinnerPlayer != null) {
+			while (!this.board.isEmpty()) {
+				trickWinnerPlayer.addCardToTrickPile(this.board.removeTopCard());
+			}
+		}
 
 	}
 
@@ -200,9 +233,12 @@ public abstract class AbstractGame implements IGame {
 	public final PlayerRender theWinnerIs() {
 		PlayerRender winnerPlayer = null;
 
-		/*
-		 * TODO Atelier3
-		 */
+		for (Player player : this.players) {
+			if (player.isGameWinner()) {
+				winnerPlayer = new PlayerRender(player);
+				break;
+			}
+		}
 
 		return winnerPlayer;
 	}
