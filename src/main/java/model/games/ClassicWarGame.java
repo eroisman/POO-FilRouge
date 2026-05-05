@@ -5,7 +5,6 @@ import java.util.List;
 import allShared.ICardsCollection;
 import allShared.IGame;
 import allShared.IGameEvaluator;
-import model.player.Player;
 
 /**
  * Jeu de Bataille qui utilise un évaluateur de type ClassicWarGameEvaluator

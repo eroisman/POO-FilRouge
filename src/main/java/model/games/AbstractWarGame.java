@@ -1,15 +1,11 @@
 package model.games;
 
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import allShared.ICardsCollection;
 import allShared.IGame;
 import allShared.IGameEvaluator;
 import model.cards.Card;
-import model.cards.Rank;
-import model.cards.Suit;
 import model.player.Player;
 
 

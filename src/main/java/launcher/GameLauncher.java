@@ -28,8 +28,10 @@ public class GameLauncher {
 		super();
 		
 		this.views = new GameViews(false);
-		IGameView commandLineView = new GameConsoleView(true);
-		IGameView gameSwingView = new GameSwingView(false);
+		GameConsoleView commandLineView = new GameConsoleView(true);
+		commandLineView.initializeView();
+		GameSwingView gameSwingView = new GameSwingView(false);
+		gameSwingView.initializeView();
 		this.views.addViewable(commandLineView);
 		this.views.addViewable(gameSwingView);
 		

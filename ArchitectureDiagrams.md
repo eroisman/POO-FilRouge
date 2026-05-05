@@ -375,7 +375,7 @@ sequenceDiagram
     GV->>GSV: showWinner(winner)
 ```
 
-  ## 3. Diagramme de Structure (Packages et Dependances Principales)
+## 3. Diagramme de Structure (Packages et Dependances Principales)
 
 ```mermaid
 flowchart LR

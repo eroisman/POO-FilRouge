@@ -15,8 +15,6 @@ import controller.CardsCollectionFactory;
 import model.cards.Board;
 import model.cards.Card;
 import model.cards.CardRender;
-import model.cards.Rank;
-import model.cards.Suit;
 import model.player.Player;
 import model.player.PlayerRender;
 
@@ -67,8 +65,11 @@ public abstract class AbstractGame implements IGame {
 		this.deck.shuffle();
 		
 		this.initDeckSize = this.deck.size();
-		this.dealCardsFromDeck(this.initDeckSize / this.players.size());
 	
+	}
+
+	public final void initializeGame() {
+		this.dealCardsFromDeck(this.initDeckSize / this.players.size());
 	}
 	
 

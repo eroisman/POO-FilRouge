@@ -27,13 +27,23 @@ public class GameFactory {
 	public static IGame getGame(GameType gameType, List<String> playersNames, ICardsCollection deck) {
 	
         switch (gameType) {
-            case WARGAME_CLASSIC: return new ClassicWarGame(playersNames, deck);
-            case WARGAME_NEW: return new NewWarGame(playersNames, deck);
+            case WARGAME_CLASSIC: {
+				ClassicWarGame game = new ClassicWarGame(playersNames, deck);
+				game.initializeGame();
+				return game;
+			}
+            case WARGAME_NEW: {
+				NewWarGame game = new NewWarGame(playersNames, deck);
+				game.initializeGame();
+				return game;
+			}
  //         case BELOTE: return new Belote(playersNames, deck);
 		default:
 			break;
           
         }
-        return new ClassicWarGame(playersNames, deck); // Game par défaut
+		ClassicWarGame game = new ClassicWarGame(playersNames, deck);
+		game.initializeGame();
+		return game; // Game par défaut
 	}
 }

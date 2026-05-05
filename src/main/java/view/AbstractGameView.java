@@ -33,6 +33,9 @@ public abstract class AbstractGameView implements IGameView {
 	public AbstractGameView(boolean isMasterView) {
 		super();
 		this.isMasterView = isMasterView;
+	}
+
+	public final void initializeView() {
 		this.gameType = this.chooseGameType();
 		this.createAndShowView();
 	}
